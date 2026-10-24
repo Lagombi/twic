@@ -2,6 +2,7 @@
 <p>interface-component works!</p>
 @if(initialLoading.finalSetup) {
     <p>Setting up...</p>
+    <mat-progress-spinner></mat-progress-spinner>
 } @else {
     <h1>Twinleaf Customized Card images JSON Generator</h1>
     <p>
@@ -15,12 +16,74 @@
     <input type="text" [value]="customSource" (input)="customSource = $any($event.target).value" placeholder="Enter custom source URL">
     <button (click)="loadCustomSource()">Load Custom Source (Warning: Will reset current changes!)</button>
 
-    <h3>Search and Replace</h3>
-    <!-- angular material select will go here -->
-    <!-- custom image URL input and confirm button will go here -->
-    <!-- bulk replace checkbox will go here, as well as a warning that "ex, owners pokemon, etc" are not considered the same card name. -->
-     
-    <h3>Generate Customized JSON</h3>
-    <!-- generate button will go here -->
-    <!-- once generated, we will give the user the ability to download their JSON. Use data: URI and encode JSON. -->
+    @if(initialLoading.customSource) {
+        <p>Loading custom JSON...</p>
+        <mat-progress-spinner></mat-progress-spinner>
+    } @else {
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Replace Card Images</mat-card-title>
+            </mat-card-header>
+            <mat-card-actions>
+                <!-- angular material select will go here, we will use the select search module to help implement. -->
+                <mat-form-field>
+                    <mat-select placeholder="Select a card" [value]="selectedCard" (selectionChange)="selectedCard = $event.value">
+                        <mat-option>
+                            <ngx-mat-select-search
+                                [formControl]="cardSearchControl"
+                                placeholderLabel="Search cards..."
+                                noEntriesFoundLabel="No matching cards found">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        @for (card of filteredSearchableData(); track card.cardModel.id) {
+                        <mat-option [value]="card">
+                            <div>
+                                <span class="bold">{{ card.cardModel.name }}</span>
+                                <span class="subtext">{{ card.cardModel.id }}</span>
+                            </div>
+                            <div>
+                                <span class="subtext">{{ card.setModel.name}} {{ card.cardModel.localId }}/{{card.setModel.cardCount.official}}</span>
+                            </div>
+                        </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                <!-- custom image URL input and confirm button will go here. Use MatInput and MatButton -->
+                <mat-form-field>
+                    <mat-label>Custom Image URL</mat-label>
+                    <input matInput type="text" [value]="customImageUrl" (input)="customImageUrl = $any($event.target).value" placeholder="Enter custom image URL">
+                </mat-form-field>
+                <button mat-raised-button (click)="replaceCardImage(selectedCard!, bulkReplace)" [disabled]="!selectedCard || !customImageUrl">Confirm</button>
+                <!-- bulk replace checkbox will go here, as well as a warning that "ex, owners pokemon, etc" are not considered the same card name. -->
+                <mat-checkbox [checked]="bulkReplace" (change)="bulkReplace = $event.checked">Replace for all cards with the same name.</mat-checkbox>
+                <p class="subtext">Note: ex pokemon, owner's pokemon, etc. are not considered the same card as the standard version.</p>
+            </mat-card-actions>
+            <mat-card-content>
+                <!-- we will put images here for the user to compare the image loaded from the orignal JSON, the current one on the new JSON, 
+                 and what they entered into the replace input side-by side. Restrict the size of the images to fit nicely. -->
+                <div class="image-comparison">
+                    <div>
+                        <p>Original:</p>
+                        <img [src]="selectedCard?.jsonPropertyName ? initialJson[selectedCard.jsonPropertyName] : ''" alt="Original Image">
+                    </div>
+                    <div>
+                        <p>Current:</p>
+                        <img [src]="selectedCard?.jsonPropertyName ? newJson[selectedCard.jsonPropertyName] : ''" alt="Current Image">
+                    </div>
+                    <div>
+                        <p>Entered:</p>
+                        <img [src]="customImageUrl" alt="Custom Image">
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        
+        <h3>Generate Customized JSON</h3>
+        <button mat-raised-button (click)="generateJson()">Generate JSON</button>
+        @if (downloadUri) {
+            <a mat-raised-button [href]="downloadUri" download="customized-card-images.json">
+                Download Customized JSON
+            </a>
+        }
+    }
 }
