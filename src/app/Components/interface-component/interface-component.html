@@ -1,6 +1,6 @@
 <!-- Basic interface. In the future, we will rework this around Angular Material or something pretty. -->
 <p>interface-component works!</p>
-@if(initialLoading.cardInfo || initialLoading.setInfo || initialLoading.sourceImages) {
+@if(initialLoading.finalSetup) {
     <p>Setting up...</p>
 } @else {
     <h1>Twinleaf Customized Card images JSON Generator</h1>
@@ -14,4 +14,13 @@
     <h3>Custom Source URL (optional)</h3>
     <input type="text" [value]="customSource" (input)="customSource = $any($event.target).value" placeholder="Enter custom source URL">
     <button (click)="loadCustomSource()">Load Custom Source (Warning: Will reset current changes!)</button>
+
+    <h3>Search and Replace</h3>
+    <!-- angular material select will go here -->
+    <!-- custom image URL input and confirm button will go here -->
+    <!-- bulk replace checkbox will go here, as well as a warning that "ex, owners pokemon, etc" are not considered the same card name. -->
+     
+    <h3>Generate Customized JSON</h3>
+    <!-- generate button will go here -->
+    <!-- once generated, we will give the user the ability to download their JSON. Use data: URI and encode JSON. -->
 }
