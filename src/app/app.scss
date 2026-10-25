@@ -1,0 +1,21 @@
+.app-container {
+  width: min(1120px, calc(100% - 32px));
+  margin-inline: auto;
+  padding-block: 24px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+mat-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.app-footer {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  padding-bottom: 24px;
+  display: flex;
+  justify-content: flex-end;
+}

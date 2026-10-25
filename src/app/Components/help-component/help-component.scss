@@ -1,0 +1,29 @@
+.help-card {
+  box-shadow: none;
+}
+
+.help-steps {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
+}
+
+.help-step {
+  min-width: 0;
+}
+
+.help-step h3 {
+  font-size: 1.125rem;
+  margin: 0 0 0.75rem;
+}
+
+.help-step img {
+  border: 1px solid #d0d0d0;
+  border-radius: 0.25rem;
+  height: auto;
+  width: 100%;
+}
+
+.help-step p {
+  margin-bottom: 0;
+}

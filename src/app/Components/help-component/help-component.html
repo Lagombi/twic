@@ -1,0 +1,27 @@
+<h2 mat-dialog-title id="help-dialog-title">How to Save This in Twinleaf.gg</h2>
+<mat-dialog-content>
+  <mat-card class="help-card">
+    <mat-card-content>
+      <div class="help-steps">
+        <p>You can upload the JSON to GitHub or any other web-accessible link. 
+            The first three steps will show an example easy for non-techical users to follow using Discord.
+            Skip to step 4 if you just need help uploading to Twinleaf.</p>
+        @for (step of steps; track step.image; let index = $index) {
+          <section class="help-step">
+            <h3>Step {{ index + 1 }}</h3>
+            <img
+              [ngSrc]="'/assets/' + step.image"
+              [alt]="step.alt"
+              [width]="step.width"
+              [height]="step.height"
+              sizes="(max-width: 700px) 100vw, 50vw">
+            <p>{{ step.description }}</p>
+          </section>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="close()">Close</button>
+</mat-dialog-actions>
