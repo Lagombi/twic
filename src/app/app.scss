@@ -17,5 +17,14 @@ mat-card {
   margin: 0 auto;
   padding-bottom: 24px;
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+}
+
+.app-credits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
 }
