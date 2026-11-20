@@ -199,6 +199,8 @@ export class InterfaceComponent implements OnInit {
     }
     this.downloadUri = null;
     
+    // reset the custom image URL when the replace is finished to avoid confusion.
+    this.customImageUrl = '';
   }
 
   // what i'm thinking is... we have an angular material select dropdown the user can search on, which will show them the card name followed by the card/set-id (id property on CardModel)

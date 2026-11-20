@@ -51,7 +51,7 @@
                                 </ngx-mat-select-search>
                             </mat-option>
                             @for (card of filteredSearchableData(); track card.cardModel.id) {
-                            <mat-option [value]="card">
+                            <mat-option [value]="card" [disabled]="!card?.jsonPropertyName">
                                 <div>
                                     <span class="bold">{{ card.cardModel.name }}</span>
                                     <span class="subtext">&nbsp;{{ card.cardModel.id }}</span>
@@ -59,6 +59,9 @@
                                 <div>
                                     <span class="subtext">{{ card.setModel.name}} {{ card.cardModel.localId }}/{{card.setModel.cardCount.official}}</span>
                                 </div>
+                                @if(!card?.jsonPropertyName) {
+                                    <small class="not-editable-warning"><em>! Missing from JSON.</em></small>
+                                }
                             </mat-option>
                             }
                         </mat-select>
@@ -86,9 +89,9 @@
                         <p>Current:</p>
                         <img [src]="selectedCard?.jsonPropertyName ? newJson[selectedCard.jsonPropertyName] : ''" alt="Current Image">
                     </div>
-                    <div>
-                        <p>Entered:</p>
-                        <img [src]="customImageUrl" alt="Custom Image">
+                    <div [hidden]="!customImageUrl">
+                        <p>Preview:</p>
+                        <img [src]="customImageUrl" alt="Custom Image Preview">
                     </div>
                 </div>
             </mat-card-content>
